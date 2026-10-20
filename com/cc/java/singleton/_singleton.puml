@@ -6,7 +6,6 @@ skinparam {
     minClassWidth 280
 }
 
-
 class Singleton {
 
     - {static} instance: Singleton
@@ -19,6 +18,11 @@ class Singleton {
     + actOnEvent(): void
 }
 
+class App{
+    + {static} main(): void
+}
+
 ' Selbstassoziation (hält Referenz auf eignene Instanz)
 Singleton --> Singleton : instance
+App --> Singleton
 @enduml
