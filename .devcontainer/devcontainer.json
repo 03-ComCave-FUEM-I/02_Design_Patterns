@@ -1,0 +1,58 @@
+{
+  "name": "Java & PlantUML Kurs-Umgebung",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  // 1. Java 21 LTS Installation
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "false",
+      "installGradle": "false"
+    }
+  },
+
+  // 2. Extensions & Settings direkt im Container erzwingen
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.java",                   // Language Support for Java (Red Hat)
+        "vscjava.vscode-java-debug",     // Debugger for Java
+        "jebbs.plantuml"                 // PlantUML
+      ],
+      "settings": {
+        // PlantUML-Konfiguration
+        "plantuml.render": "PlantUMLServer",
+        "plantuml.server": "https://www.plantuml.com/plantuml",
+        "plantuml.previewAutoUpdate": true,
+
+        // Autovervollständigung optimieren
+        "[diagram]": {
+          "editor.wordBasedSuggestions": "off",
+          "editor.snippetSuggestions": "top"
+        },
+
+        // Red Hat Konfiguration
+        "redhat.telemetry.enabled": true,
+
+        // Launch-Verhalten für die Debug-Konsole
+        "launch": {
+          "configurations": [
+            {
+              "type": "java",
+              "name": "Java-Launcher",
+              "request": "launch",
+              "mainClass": "${file}",
+              "console": "internalConsole",
+              "vmArgs": [
+                "-Dfile.encoding=UTF-8",
+                "-Dsun.stdout.encoding=UTF-8",
+                "-Dsun.stderr.encoding=UTF-8"
+              ]
+            }
+          ],
+          "compounds": []
+        }
+      }
+    }
+  }
+}
