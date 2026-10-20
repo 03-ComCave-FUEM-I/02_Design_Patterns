@@ -8,7 +8,7 @@ public class App {
      
     Customer customer = new Customer(1, "Maxine Mützerich", "Mützenhausen");
 
-    Helper.output(customer);
+    // Helper.output(customer);
     // Helper.output(new Customer(1, "Maxine Mützerich", "Mützenhausen"));;
 
     customer.initOrder();

@@ -63,8 +63,8 @@ class Timer {
 Customer -[hidden]right- Order
 Order -[hidden]right- Timer
 
-' 1. Gerichtete Assoziation: Customer kennt Order
-Customer "1" --> "0..1" Order 
+' 1. Bidirektional Assoziation: beide kennen sich
+Customer <-->  Order 
 
 ' 2. Komposition: Order steuert und besitzt seinen internen Timer
 Order "1" *--> "1" Timer 
