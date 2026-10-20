@@ -1,0 +1,24 @@
+@startuml singleton
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 280
+}
+
+
+class Singleton {
+
+    - {static} instance: Singleton
+    - counter: int
+
+    - Singleton()
+
+    + {static} getInstance(): Singleton
+    + getCounter(): int
+    + actOnEvent(): void
+}
+
+' Selbstassoziation (hält Referenz auf eignene Instanz)
+Singleton --> Singleton : instance
+@enduml

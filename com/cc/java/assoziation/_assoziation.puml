@@ -1,0 +1,72 @@
+@startuml assoziation
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 200
+    nodesep 100
+}
+
+
+' ========================================================
+' KLASSEN
+' ========================================================
+class Customer {
+    - id: int
+    - name: String
+    - city: String
+    - order: Order
+    + getID(): int
+    + getName(): String
+    + getCity(): String
+    + checkOrder(): void
+    + initOrder(): void
+    + removeOrder(): void
+    - getOrderDetails(String): String
+    - checkOrderStatus(): String
+}
+
+class Order {
+    - orderID: int
+    - orderType: String
+    - orderDate: LocalDate
+    - isFinished: boolean
+    - timer: Timer
+    + getOrderID(): int
+    + getOrderType(): int
+    + getOrderDate(): LocalDate
+    + isFinished(): boolean
+    - finishOrder(): void
+    - startTimer(): void
+    {method} <color:transparent>_</color>
+}
+
+class Timer {
+    - startTime: long
+    - durationMs: long
+    - running: boolean
+    + start(): void
+    + stop(): void
+    + isExpired(): boolean
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+}
+
+' ========================================================
+' LAYOUT & BEZIEHUNGEN
+' ========================================================
+' Horizontale Anordnung der Klassen nebeneinander:
+Customer -[hidden]right- Order
+Order -[hidden]right- Timer
+
+' 1. Gerichtete Assoziation: Customer kennt Order
+Customer "1" --> "0..1" Order 
+
+' 2. Komposition: Order steuert und besitzt seinen internen Timer
+Order "1" *--> "1" Timer 
+
+@enduml

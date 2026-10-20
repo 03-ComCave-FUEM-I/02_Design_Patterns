@@ -1,0 +1,65 @@
+@startuml observer_interface
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 280
+}
+
+' --- Interfaces (oben) ---
+interface Observable {
+    + {abstract} attach(Observer): void
+    + {abstract} detatch(Observer): void
+    + {abstract} notifyObservers(): void
+   {method} <color:transparent>_</color>
+}
+
+interface IObserve {
+    + {abstract} update(): void
+    + {abstract} update(String): void
+    + {abstract} subscribe(): void
+    + {abstract} unsubscribe(): void
+}
+
+' Oberkanten der Interfaces bündig ausrichten:
+Observable -[hidden]right- IObserve
+
+
+' --- Konkrete Klassen (unten) ---
+class Subject {
+    - state: String
+    - observers: List<Observer>
+    + Subject()
+    + attach(Observer): void
+    + detach(Observer): void
+    + notifyObservers(): void
+    + setState(String): void
+    + getState(): String
+    {method} <color:transparent>_</color>
+    {method} <color:transparent>_</color>
+}
+
+class Observer {
+    - name: String
+    - s: Subject
+    - pushed: boolean
+    + Observer()
+    + subscribe(): void
+    + unsubscribe(): void
+    + update(): void
+    + update(String): void
+    + isPushed(): boolean
+    + setPushed(boolean): void
+}
+
+' WICHTIG: Oben verankerte unsichtbare Verbindung richtet die Oberkanten bündig aus:
+Subject::top -[hidden]right- Observer::top
+
+' --- Beziehungen ---
+Observable <|.. Subject
+IObserve <|.. Observer
+
+Observable -right-> IObserve
+Observer -left-> Subject
+
+@enduml

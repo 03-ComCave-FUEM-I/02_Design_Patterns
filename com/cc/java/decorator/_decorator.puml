@@ -1,0 +1,85 @@
+@startuml decorator_umbau
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 220
+}
+
+' ========================================================
+' 1. OBEN: Zentrale Basisklasse
+' ========================================================
+abstract class Coffee {
+    # description: String
+    + getDescription(): String
+    + {abstract} cost(): double
+}
+
+' ========================================================
+' 2. MITTE: Konkrete Kaffees (vertikal unter Coffee)
+' ========================================================
+class BlondeRoast {
+    + BlondeRoast()
+    + getDescription(): void
+    + cost(): double
+}
+
+class SignatureRoast {
+    + SignatureRoast()
+    + getDescription(): void
+    + cost(): double
+}
+
+' ========================================================
+' 3. RECHTER ZWEIG: Decorator & Zutaten
+' ========================================================
+abstract class Decorator {
+    # coffee: Coffee
+    + {abstract} getDescription(): String
+    {method} <color:transparent>_</color>
+}
+
+class Milk {
+    + Milk()
+    + getDescription(): void
+    + cost(): double
+}
+
+class Caramel {
+    + Caramel()
+    + getDescription(): void
+    + cost(): double
+}
+
+' ========================================================
+' LAYOUT-STEUERUNG (Coffee links, Decorator rechts)
+' ========================================================
+
+' Zwingt Coffee direkt über BlondeRoast (nach links):
+Coffee -[hidden]down-> BlondeRoast
+
+' Horizontale Reihenfolge der Kaffees:
+BlondeRoast -[hidden]right- SignatureRoast
+
+' Zwingt den Decorator rechts neben die Kaffees:
+Coffee -[hidden]right- Decorator
+
+' Zwingt Zutaten nebeneinander unter den Decorator:
+Milk -[hidden]right- Caramel
+Decorator -[hidden]down-> Milk
+
+' ========================================================
+' FACHLICHE BEZIEHUNGEN
+' ========================================================
+Coffee <|-- BlondeRoast
+Coffee <|-- SignatureRoast
+Coffee <|-- Decorator
+
+' Aggregation / Kapselung:
+Decorator -left-> Coffee 
+
+' Vererbung der Decorators:
+Decorator <|-- Milk
+Decorator <|-- Caramel
+
+@enduml
