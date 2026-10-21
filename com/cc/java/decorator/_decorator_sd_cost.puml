@@ -1,0 +1,41 @@
+@startuml sd_decorator_cost
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 100
+    
+}
+
+autonumber
+
+actor Kasse as K
+participant ":Caramel" as caramel
+participant ":Milk" as milk
+participant ":DarkRoast" as darkRoast
+
+' 1. Die Kasse ruft cost() auf der äußersten Hülle (Caramel) auf
+K -> caramel : cost()
+activate caramel
+
+' 2. Caramel delegiert über seine Assoziation an das innere Objekt (Milk)
+caramel -> milk : cost()
+activate milk
+
+' 3. Milk delegiert über seine Assoziation an den Kaffeekern (DarkRoast)
+milk -> darkRoast : cost()
+activate darkRoast
+
+' 4. Der Kern liefert seinen Grundpreis zurück
+darkRoast --> milk : 2.50
+deactivate darkRoast
+
+' 5. Milk schlägt seinen Aufpreis auf (2.50 + 0.50 = 3.00)
+milk --> caramel : 3.00
+deactivate milk
+
+' 6. Caramel schlägt seinen Aufpreis auf (3.00 + 0.70 = 3.70)
+caramel --> K : 3.70
+deactivate caramel
+
+@enduml

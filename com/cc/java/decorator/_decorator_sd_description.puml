@@ -1,0 +1,41 @@
+@startuml sd_decorator_getdescription
+
+skinparam {
+    classAttributeIconSize 0
+    style strictuml
+    minClassWidth 100
+    
+}
+
+autonumber
+
+actor Kasse as K
+participant ":Caramel" as caramel
+participant ":Milk" as milk
+participant ":DarkRoast" as darkRoast
+
+' 1. Die Kasse fragt die Beschreibung der äußersten Schicht ab
+K -> caramel : getDescription()
+activate caramel
+
+' 2. Caramel delegiert über die Assoziation an das innere Objekt
+caramel -> milk : getDescription()
+activate milk
+
+' 3. Milk delegiert an die Basis-Kaffeekomponente
+milk -> darkRoast : getDescription()
+activate darkRoast
+
+' 4. Der Kern liefert seine eigene Grundbeschreibung
+darkRoast --> milk : "Dark Roast"
+deactivate darkRoast
+
+' 5. Milk hängt seinen Zusatz an ("Dark Roast" + ", Milk")
+milk --> caramel : "Dark Roast, Milk"
+deactivate milk
+
+' 6. Caramel hängt seinen Zusatz an ("Dark Roast, Milk" + ", Caramel")
+caramel --> K : "Dark Roast, Milk, Caramel"
+deactivate caramel
+
+@enduml
